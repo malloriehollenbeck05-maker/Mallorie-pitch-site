@@ -14,6 +14,7 @@
       --brown-mid: #6e5434;
       --gold: #c79b42;
       --gold-soft: #d7bf96;
+      --gold-line: #c8ab7a;
       --text: #4b3a2a;
       --muted: #7b6242;
       --shadow: 0 12px 30px rgba(74, 50, 26, 0.12);
@@ -24,10 +25,6 @@
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -57,8 +54,8 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 460px);
+      gap: 48px;
       align-items: center;
     }
 
@@ -99,26 +96,41 @@
       margin-top: 30px;
     }
 
-    .tab-row a {
-      text-decoration: none;
-      color: var(--brown);
-      background: rgba(255, 255, 255, 0.8);
+    .tab-button {
       border: 1px solid var(--gold-soft);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--brown);
       padding: 12px 18px;
       border-radius: 999px;
       font-size: 14px;
       font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
       box-shadow: 0 4px 12px rgba(74, 50, 26, 0.06);
+      transition: all 0.2s ease;
     }
 
-    .tab-row a:hover {
+    .tab-button:hover {
       background: #efe2cd;
+    }
+
+    .tab-button.active {
+      background: #6b4b2a;
+      color: white;
+      border-color: #6b4b2a;
     }
 
     .photo-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 16px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+      align-content: start;
     }
 
     .photo-card {
@@ -127,6 +139,7 @@
       border-radius: var(--radius-xl);
       padding: 12px;
       box-shadow: var(--shadow);
+      width: 100%;
     }
 
     .photo-inner {
@@ -143,11 +156,12 @@
       text-align: center;
       color: var(--muted);
       padding: 22px;
-      border: 2px dashed #c8ab7a;
+      border: 2px dashed var(--gold-line);
       border-radius: 22px;
       background: #f3e7d3;
       min-height: 100%;
       font-size: 14px;
+      font-weight: 600;
     }
 
     .portrait {
@@ -162,11 +176,6 @@
       aspect-ratio: 16 / 10;
     }
 
-    .stack {
-      display: grid;
-      gap: 16px;
-    }
-
     .section-wrap {
       padding: 46px 0 70px;
     }
@@ -178,7 +187,6 @@
       box-shadow: var(--shadow);
       padding: 28px;
       backdrop-filter: blur(6px);
-      margin-bottom: 22px;
     }
 
     .panel h2 {
@@ -191,6 +199,14 @@
       color: var(--text);
       font-size: 17px;
       margin: 0 0 16px 0;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
     }
 
     .resume-grid {
@@ -326,18 +342,15 @@
       text-align: center;
       color: var(--muted);
       font-size: 14px;
-      padding: 4px 0 32px;
+      padding: 18px 0 8px;
     }
 
     @media (max-width: 900px) {
       .hero-grid,
       .resume-grid,
-      .quotes-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .photo-grid,
-      .gallery-grid {
+      .quotes-grid,
+      .gallery-grid,
+      .photo-grid {
         grid-template-columns: 1fr;
       }
 
@@ -369,13 +382,13 @@
           am and what sets me apart.
         </p>
 
-        <nav class="tab-row">
-          <a href="#about">About Me</a>
-          <a href="#resume">Resume</a>
-          <a href="#value">Value</a>
-          <a href="#references">References</a>
-          <a href="#gallery">Gallery</a>
-        </nav>
+        <div class="tab-row">
+          <button class="tab-button active" data-tab="about">About Me</button>
+          <button class="tab-button" data-tab="resume">Resume</button>
+          <button class="tab-button" data-tab="value">Value</button>
+          <button class="tab-button" data-tab="references">References</button>
+          <button class="tab-button" data-tab="gallery">Gallery</button>
+        </div>
       </div>
 
       <div class="photo-grid">
@@ -413,191 +426,210 @@
 
   <main class="section-wrap">
     <div class="container">
-      <section id="about" class="panel">
-        <p class="section-eyebrow">About Me</p>
-        <h2>The person behind the pitch</h2>
-        <p>
-          I am a junior at Northwood University studying Marketing, with a strong
-          background in automotive and a personal brand rooted in professionalism,
-          confidence, and genuine connection. I care deeply about how I present
-          myself, how I treat others, and the kind of impression I leave behind.
-          To me, success is not only about what you achieve, but also about the
-          energy, character, and intention you bring into every room.
-        </p>
-        <p>
-          Outside of academics, my experience in the equine industry has played a
-          major role in shaping who I am. It has taught me discipline, resilience,
-          and the importance of staying composed under pressure, while also building
-          the confidence to lead and the determination to keep pushing through
-          challenges. I take pride in balancing polish with authenticity, and I
-          hope to be recognized not just for my experience, but for the work ethic,
-          presence, and dedication I bring with me.
-        </p>
-      </section>
-
-      <section id="resume" class="panel">
-        <p class="section-eyebrow">Resume</p>
-        <h2>Experience Snapshot</h2>
-
-        <div class="resume-grid">
-          <div>
-            <div class="job-card">
-              <p class="dates">March 2024 – Present</p>
-              <h3 class="job-title">Administrative Co-op</h3>
-              <p class="job-company">Dow Chemical Company</p>
-              <ul>
-                <li>Organized and maintained archives and data storage systems.</li>
-                <li>Monitored stock levels and replenished items as needed.</li>
-                <li>Ensured compliance with company policies for a credit card.</li>
-                <li>Managed training records for over 25 people, ensuring all certifications were current.</li>
-              </ul>
-            </div>
-
-            <div class="job-card">
-              <p class="dates">August 2025 – December 2025</p>
-              <h3 class="job-title">Fulfillment, Winter Seasonal</h3>
-              <p class="job-company">Lowe’s</p>
-              <ul>
-                <li>Consistently met or exceeded daily productivity and accuracy targets in a fast-paced retail environment.</li>
-                <li>Accurately picked, packed, and staged customer orders for in-store pickup and delivery, ensuring on-time fulfillment and high customer satisfaction.</li>
-                <li>Operated inventory management systems to track stock levels, identify discrepancies, and restock shelves efficiently.</li>
-              </ul>
-            </div>
-
-            <div class="job-card">
-              <p class="dates">April 2023 – December 2024</p>
-              <h3 class="job-title">Rental Coordinator</h3>
-              <p class="job-company">Midland Ford Lincoln</p>
-              <ul>
-                <li>Managed daily operations of the car rental desk, ensuring efficient and customer-friendly service.</li>
-                <li>Processed rental agreements and all necessary paperwork, ensuring accuracy and compliance.</li>
-                <li>Monitored vehicle availability and maintenance schedules to ensure a well-maintained fleet.</li>
-              </ul>
-            </div>
-
-            <div class="job-card">
-              <p class="dates">August 2022 – April 2023</p>
-              <h3 class="job-title">Business Development Center</h3>
-              <p class="job-company">Garber Chevrolet Midland</p>
-              <ul>
-                <li>Scheduled and coordinated appointments for customers with the service and detail department.</li>
-                <li>Trained new BDC representatives on best practices for customer retention and satisfaction.</li>
-                <li>Resolved customer inquiries and issues promptly.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <div class="side-card">
-              <p class="small-title">Academics</p>
-              <p>2023–2027 Northwood University — Major in Marketing</p>
-              <p>2019–2023 Midland High School</p>
-            </div>
-
-            <div class="side-card" style="margin-top: 18px;">
-              <p class="small-title">Achievements</p>
-              <ul>
-                <li>2025 MIHA Junior High Coach of the Year</li>
-                <li>National Honor Society Inductee</li>
-                <li>2023 SVL All Academic Team</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="value" class="panel">
-        <p class="section-eyebrow">Value</p>
-        <h2>Why you should choose me</h2>
-        <div class="value-box">
+      <div class="panel">
+        <section id="about" class="tab-panel active">
+          <p class="section-eyebrow">About Me</p>
+          <h2>The person behind the pitch</h2>
           <p>
-            This section is intended to explain the value I bring and why I would
-            be a strong choice. As I continue building out this pitch, this page
-            will be updated to align more directly with my final message and overall theme.
+            I am a junior at Northwood University studying Marketing, with a strong
+            background in automotive and a personal brand rooted in professionalism,
+            confidence, and genuine connection. I care deeply about how I present
+            myself, how I treat others, and the kind of impression I leave behind.
+            To me, success is not only about what you achieve, but also about the
+            energy, character, and intention you bring into every room.
           </p>
           <p>
-            For now, this serves as a placeholder for the qualities, experiences,
-            and perspective that I believe set me apart. Once my pitch outline is
-            finalized, this section will reflect that direction more clearly and intentionally.
+            Outside of academics, my experience in the equine industry has played a
+            major role in shaping who I am. It has taught me discipline, resilience,
+            and the importance of staying composed under pressure, while also building
+            the confidence to lead and the determination to keep pushing through
+            challenges. I take pride in balancing polish with authenticity, and I
+            hope to be recognized not just for my experience, but for the work ethic,
+            presence, and dedication I bring with me.
           </p>
-        </div>
-      </section>
+        </section>
 
-      <section id="references" class="panel">
-        <p class="section-eyebrow">References</p>
-        <h2>What others say about me</h2>
+        <section id="resume" class="tab-panel">
+          <p class="section-eyebrow">Resume</p>
+          <h2>Experience Snapshot</h2>
 
-        <div class="quotes-grid">
-          <div class="quote-card">
-            <div class="quote-mark">“</div>
-            <p>Reference testimonials will be added here once collected.</p>
-            <div class="quote-footer">
-              <p class="quote-name">Reference coming soon</p>
-              <p class="quote-role">Professional / Mentor</p>
+          <div class="resume-grid">
+            <div>
+              <div class="job-card">
+                <p class="dates">March 2024 – Present</p>
+                <h3 class="job-title">Administrative Co-op</h3>
+                <p class="job-company">Dow Chemical Company</p>
+                <ul>
+                  <li>Organized and maintained archives and data storage systems.</li>
+                  <li>Monitored stock levels and replenished items as needed.</li>
+                  <li>Ensured compliance with company policies for a credit card.</li>
+                  <li>Managed training records for over 25 people, ensuring all certifications were current.</li>
+                </ul>
+              </div>
+
+              <div class="job-card">
+                <p class="dates">August 2025 – December 2025</p>
+                <h3 class="job-title">Fulfillment, Winter Seasonal</h3>
+                <p class="job-company">Lowe’s</p>
+                <ul>
+                  <li>Consistently met or exceeded daily productivity and accuracy targets in a fast-paced retail environment.</li>
+                  <li>Accurately picked, packed, and staged customer orders for in-store pickup and delivery, ensuring on-time fulfillment and high customer satisfaction.</li>
+                  <li>Operated inventory management systems to track stock levels, identify discrepancies, and restock shelves efficiently.</li>
+                </ul>
+              </div>
+
+              <div class="job-card">
+                <p class="dates">April 2023 – December 2024</p>
+                <h3 class="job-title">Rental Coordinator</h3>
+                <p class="job-company">Midland Ford Lincoln</p>
+                <ul>
+                  <li>Managed daily operations of the car rental desk, ensuring efficient and customer-friendly service.</li>
+                  <li>Processed rental agreements and all necessary paperwork, ensuring accuracy and compliance.</li>
+                  <li>Monitored vehicle availability and maintenance schedules to ensure a well-maintained fleet.</li>
+                </ul>
+              </div>
+
+              <div class="job-card">
+                <p class="dates">August 2022 – April 2023</p>
+                <h3 class="job-title">Business Development Center</h3>
+                <p class="job-company">Garber Chevrolet Midland</p>
+                <ul>
+                  <li>Scheduled and coordinated appointments for customers with the service and detail department.</li>
+                  <li>Trained new BDC representatives on best practices for customer retention and satisfaction.</li>
+                  <li>Resolved customer inquiries and issues promptly.</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <div class="quote-card">
-            <div class="quote-mark">“</div>
-            <p>This section is reserved for feedback from people who can speak to my work ethic, character, and professionalism.</p>
-            <div class="quote-footer">
-              <p class="quote-name">Reference coming soon</p>
-              <p class="quote-role">Professor / Advisor</p>
-            </div>
-          </div>
+            <div>
+              <div class="side-card">
+                <p class="small-title">Academics</p>
+                <p>2023–2027 Northwood University — Major in Marketing</p>
+                <p>2019–2023 Midland High School</p>
+              </div>
 
-          <div class="quote-card">
-            <div class="quote-mark">“</div>
-            <p>Additional references will be added as I continue building out this pitch.</p>
-            <div class="quote-footer">
-              <p class="quote-name">Reference coming soon</p>
-              <p class="quote-role">Coach / Leader</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="gallery" class="panel">
-        <p class="section-eyebrow">Gallery</p>
-        <h2>A look at who I am</h2>
-        <p>
-          Use this section to tell your story visually. Mix professional photos
-          with horse-related photos, leadership moments, and images that show both
-          polish and personality.
-        </p>
-
-        <div class="gallery-grid">
-          <div class="gallery-card gallery-wide">
-            <div class="gallery-photo landscape">
-              <div class="photo-placeholder">
-                GALLERY PHOTO 1<br />
-                Landscape photo
+              <div class="side-card" style="margin-top: 18px;">
+                <p class="small-title">Achievements</p>
+                <ul>
+                  <li>2025 MIHA Junior High Coach of the Year</li>
+                  <li>National Honor Society Inductee</li>
+                  <li>2023 SVL All Academic Team</li>
+                </ul>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="gallery-card">
-            <div class="gallery-photo landscape">
-              <div class="photo-placeholder">
-                GALLERY PHOTO 2<br />
-                Landscape photo
+        <section id="value" class="tab-panel">
+          <p class="section-eyebrow">Value</p>
+          <h2>Why you should choose me</h2>
+          <div class="value-box">
+            <p>
+              This section is intended to explain the value I bring and why I would
+              be a strong choice. As I continue building out this pitch, this page
+              will be updated to align more directly with my final message and overall theme.
+            </p>
+            <p>
+              For now, this serves as a placeholder for the qualities, experiences,
+              and perspective that I believe set me apart. Once my pitch outline is
+              finalized, this section will reflect that direction more clearly and intentionally.
+            </p>
+          </div>
+        </section>
+
+        <section id="references" class="tab-panel">
+          <p class="section-eyebrow">References</p>
+          <h2>What others say about me</h2>
+
+          <div class="quotes-grid">
+            <div class="quote-card">
+              <div class="quote-mark">“</div>
+              <p>Reference testimonials will be added here once collected.</p>
+              <div class="quote-footer">
+                <p class="quote-name">Reference coming soon</p>
+                <p class="quote-role">Professional / Mentor</p>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <div class="quote-mark">“</div>
+              <p>This section is reserved for feedback from people who can speak to my work ethic, character, and professionalism.</p>
+              <div class="quote-footer">
+                <p class="quote-name">Reference coming soon</p>
+                <p class="quote-role">Professor / Advisor</p>
+              </div>
+            </div>
+
+            <div class="quote-card">
+              <div class="quote-mark">“</div>
+              <p>Additional references will be added as I continue building out this pitch.</p>
+              <div class="quote-footer">
+                <p class="quote-name">Reference coming soon</p>
+                <p class="quote-role">Coach / Leader</p>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="gallery-card">
-            <div class="gallery-photo portrait">
-              <div class="photo-placeholder">
-                GALLERY PHOTO 3<br />
-                Portrait photo
+        <section id="gallery" class="tab-panel">
+          <p class="section-eyebrow">Gallery</p>
+          <h2>A look at who I am</h2>
+          <p>
+            Use this section to tell your story visually. Mix professional photos
+            with horse-related photos, leadership moments, and images that show both
+            polish and personality.
+          </p>
+
+          <div class="gallery-grid">
+            <div class="gallery-card gallery-wide">
+              <div class="gallery-photo landscape">
+                <div class="photo-placeholder">
+                  GALLERY PHOTO 1<br />
+                  Landscape photo
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-card">
+              <div class="gallery-photo landscape">
+                <div class="photo-placeholder">
+                  GALLERY PHOTO 2<br />
+                  Landscape photo
+                </div>
+              </div>
+            </div>
+
+            <div class="gallery-card">
+              <div class="gallery-photo portrait">
+                <div class="photo-placeholder">
+                  GALLERY PHOTO 3<br />
+                  Portrait photo
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <p class="footer-note">Built to reflect experience, professionalism, and presence.</p>
     </div>
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll(".tab-button");
+    const panels = document.querySelectorAll(".tab-panel");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.tab;
+
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        panels.forEach((panel) => panel.classList.remove("active"));
+
+        button.classList.add("active");
+        document.getElementById(target).classList.add("active");
+      });
+    });
+  </script>
 </body>
 </html>
